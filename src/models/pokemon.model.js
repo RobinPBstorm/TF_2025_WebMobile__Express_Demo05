@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 
-function pokemonModel (sequelize) {
+export default function pokemonModel (sequelize) {
     const Pokemon =sequelize.define (
         'pokemon', 
         // définition des colonnes et leurs contraintes
@@ -23,27 +23,27 @@ function pokemonModel (sequelize) {
                 allowNull: true
             },
             hp: {
-                types: DataTypes.TINYINT,
+                type: DataTypes.TINYINT,
                 allowNull: false
             },
             attack: {
-                types: DataTypes.TINYINT,
+                type: DataTypes.TINYINT,
                 allowNull: false
             },
             defense: {
-                types: DataTypes.TINYINT,
+                type: DataTypes.TINYINT,
                 allowNull: false
             },
             attackSp: {
-                types: DataTypes.TINYINT,
+                type: DataTypes.TINYINT,
                 allowNull: false
             },
             defenseSp: {
-                types: DataTypes.TINYINT,
+                type: DataTypes.TINYINT,
                 allowNull: false
             },
             speed: {
-                types: DataTypes.TINYINT,
+                type: DataTypes.TINYINT,
                 allowNull: false
             }
         },
@@ -55,7 +55,4 @@ function pokemonModel (sequelize) {
     );
 
         return Pokemon;
-    }
-
-    export default pokemonModel;
-}
+    };

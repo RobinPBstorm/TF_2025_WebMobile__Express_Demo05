@@ -1,48 +1,33 @@
 import { pokemonListItemDTO } from "../DTO/pokemon.dto.js";
-
-const pokemons = [
-    {
-        id: 1, 
-        name: "Bulbizarre", 
-        description: "C'est un dinosaure de type plante avec un bulbe sur le dos", 
-        image: "", 
-        hp: 45,
-        defense: 49,
-        attack: 49,
-        defenseSP: 65,
-        attackSP: 65,
-        vitesse: 45
-    },
-    {
-        id: 720, 
-        name: "Hoopa", 
-        description: "C'est sonic et ça passera nickel.", 
-        image: "", 
-        hp: 80,
-        defense: 60,
-        attack: 110,
-        defenseSP: 130,
-        attackSP: 150,
-        speed: 70
-    }
-];
+import db from "../models/index.js";
 
 const pokemonService = {
-    getAll: () => {
-        return pokemons
-            .map(p => new pokemonListItemDTO(p));
+    getAll: async () => {
+        // return pokemons
+        //     .map(p => new pokemonListItemDTO(p));
+        return await db.Pokemon.findAll();
     },
-    getById: (id) => {
-
+    getById: async (id) => {
+        const pokemon = await db.Pokemon.findOne({
+            where: { id: id }
+        });
+        return pokemon;
     },
-    add: (data) => {
+    add: async (data) => {
+        const pokemon = data;
 
+        const newPokemon = await db.Pokemon.create(pokemon);
+        return newPokemon;
     },
     update: (id, data) => {
 
     },
-    delete: (id) => {
+    delete: async (id) => {
+        const nbRowDeleted = await db.Pokemon.destroy({
+            where: {id: id}
+        });
 
+        return nbRowDeleted === 1;
     }
 }
 

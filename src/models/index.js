@@ -1,4 +1,5 @@
 import { Sequelize } from "sequelize";
+import pokemonModel from "./pokemon.model.js";
 
 const sequelize = new Sequelize(
     process.env.DB_DATABASE,
@@ -21,5 +22,7 @@ const sequelize = new Sequelize(
 const db = {}
 
 db.sequelize = sequelize;
+
+db.Pokemon = pokemonModel(sequelize);
 
 export default db;
