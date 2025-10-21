@@ -85,6 +85,13 @@ const typeController = {
             }
         }
     },
+    getPokemonByType: async (req,res) => {
+        const typeId = parseInt(req.params.typeId);
+        const pokemons = await typeService.getPokemonByType(typeId);
+
+        res.status(200);
+        res.json(pokemons);
+    }
 }
 
 export default typeController;

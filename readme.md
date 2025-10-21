@@ -4,8 +4,12 @@
 ```bash
 # L'ORM de JS
 npm install sequelize
+
+#choisir le bon driver
 # Le driver pour se connecter à SQL Server
 npm install tedious
+#Le driver pour se connecter à PostgreSql
+npm install pg
 ```
 
 Si on se connecte à un SGBD SQL Server, il faudra s'assure que le protocole tcp/ip soit actif.

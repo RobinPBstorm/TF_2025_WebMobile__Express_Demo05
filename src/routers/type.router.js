@@ -15,4 +15,8 @@ typeRouter.route('/:id')
     // prévu pour modifier certain champ
     .patch(typeController.patch);
 
+// /!\ aux noms des ids pour pouvoir les récupérer dans le controller
+typeRouter.route('/:typeId/pokemon')
+    .get(typeController.getPokemonByType)
+
 export default typeRouter;

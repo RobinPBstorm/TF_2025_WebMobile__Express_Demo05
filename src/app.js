@@ -12,10 +12,10 @@ db.sequelize.authenticate()
     .catch((err) => console.error(`Connection DB: Error (${err})`));
 
     if (NODE_ENV !== 'production') {
-        db.sequelize.sync(
-            // force: true,
-            // alter: true
-        );
+        db.sequelize.sync({
+            //force: true,
+            //alter: true
+        });
     }
 
 app.use(express.json());

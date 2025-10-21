@@ -3,12 +3,24 @@ import db from "../models/index.js";
 
 const pokemonService = {
     getAll: async () => {
-        // return pokemons
-        //     .map(p => new pokemonListItemDTO(p));
-        return await db.Pokemon.findAll();
+        return (await db.Pokemon.findAll({
+            order: [
+                ['id', 'ASC']
+            ]
+        })).map(p => new pokemonListItemDTO(p));
     },
     getById: async (id) => {
         const pokemon = await db.Pokemon.findOne({
+            include: [
+                {
+                    model:db.Type,
+                    as: 'type1'
+                },
+                {
+                    model:db.Type,
+                    as: 'type2'
+                },
+            ],
             where: { id: id }
         });
         return pokemon;

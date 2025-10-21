@@ -27,4 +27,35 @@ db.sequelize = sequelize;
 db.Pokemon = pokemonModel(sequelize);
 db.Type = typeModel(sequelize);
 
+// Ajout des relations
+// One TO MANY
+// relation one => belongsTo
+db.Pokemon.belongsTo(db.Type,{
+    foreignKey: "type1Id",
+    as: "type1"
+    }
+);
+// relation many => hasMany
+db.Type.hasMany(db.Pokemon, {
+    foreignKey: { 
+        name: "type1Id",
+        allowNull: false
+    },
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE'
+});
+db.Pokemon.belongsTo(db.Type,{
+    foreignKey: "type2Id",
+    as: "type2"
+    }
+);
+db.Type.hasMany(db.Pokemon, {
+    foreignKey: { 
+        name: "type2Id",
+        allowNull: true
+    },
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE'
+});
+
 export default db;

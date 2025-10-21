@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import db from "../models/index.js";
 
 const typeService = {
@@ -40,6 +41,18 @@ const typeService = {
 
         return nbRowDeleted === 1;
     },
+    getPokemonByType: async (typeId) => {
+        const pokemons = await db.Pokemon.findAll({ 
+                where: {
+                    [Op.or] : {
+                        type1Id : typeId,
+                        type2Id : typeId
+                    }
+                }
+        });
+
+        return pokemons;
+    }
 }
 
 export default typeService;
