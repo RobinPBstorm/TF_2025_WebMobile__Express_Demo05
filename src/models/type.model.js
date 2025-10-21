@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 
 export default function typeModel (sequelize) {
-    const Type =sequelize.define (
+    const Type = sequelize.define (
         'type', 
         // définition des colonnes et leurs contraintes
         {

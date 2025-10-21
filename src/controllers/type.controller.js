@@ -91,6 +91,71 @@ const typeController = {
 
         res.status(200);
         res.json(pokemons);
+    },
+    getWeakness: async (req, res) => {
+        const typeId = parseInt(req.params.typeId);
+        const weaknesses = await typeService.getWeakness(typeId);
+
+        res.status(200);
+        res.json(weaknesses);
+    },
+    addWeakness: async (req, res) => {
+        try {
+            
+        const typeId = parseInt(req.params.typeId);
+        const weaknessTypeId = parseInt(req.params.type2Id);
+        
+        const {type, weaknessType} = await typeService.addWeakness(typeId, weaknessTypeId);
+
+         res.status(200);
+        res.json({
+                message: `Le type ${type.name} est maintenant faible au type ${weaknessType.name}!`,
+                });
+            }
+        catch(Error){
+            switch(Error.message){
+                case 'TYPE_NOT_FOUND':
+                    res.status(404);
+                    res.json({message: "type n'a pas été trouvé"});
+                    break;
+                case 'WEAKNESS_TYPE_NOT_FOUND':
+                    res.status(404);
+                    res.json({message: "type de la faiblesse n'a pas été trouvé"});
+                    return;
+                default:
+                    res.status(500);
+                    res.json({message: Error.message});
+            }
+        }
+    },
+    removeWeakness: async (req, res) => {
+        try {
+            
+        const typeId = parseInt(req.params.typeId);
+        const weaknessTypeId = parseInt(req.params.type2Id);
+        
+        const {type, weaknessType} = await typeService.removeWeakness(typeId, weaknessTypeId);
+
+         res.status(200);
+        res.json({
+                message: `Le type ${type.name} n'est plus faible au type ${weaknessType.name}!`,
+                });
+            }
+        catch(Error){
+            switch(Error.message){
+                case 'TYPE_NOT_FOUND':
+                    res.status(404);
+                    res.json({message: "type n'a pas été trouvé"});
+                    break;
+                case 'WEAKNESS_TYPE_NOT_FOUND':
+                    res.status(404);
+                    res.json({message: "type de la faiblesse n'a pas été trouvé"});
+                    return;
+                default:
+                    res.status(500);
+                    res.json({message: Error.message});
+            }
+        }
     }
 }
 

@@ -52,6 +52,57 @@ const typeService = {
         });
 
         return pokemons;
+    },
+    addWeakness: async (typeId, weaknessTypeId) => {
+        
+        const type = await typeService.getById(typeId);
+
+        const weaknessType = await typeService.getById(weaknessTypeId);
+
+        if (!type) {
+            throw new Error('TYPE_NOT_FOUND')
+        }
+        if (!weaknessType) {
+            throw new Error('WEAKNESS_TYPE_NOT_FOUND')
+        }
+        
+        // Cette méthode a été généré par la relation many to many
+        // le nom vient aussi de la alias qu'on donné dans la relation
+        await type.addWeaknesses(weaknessType);
+
+        return { type, weaknessType };
+    },
+    removeWeakness: async (typeId, weaknessTypeId) => {
+        
+        const type = await typeService.getById(typeId);
+
+        const weaknessType = await typeService.getById(weaknessTypeId);
+
+        if (!type) {
+            throw new Error('TYPE_NOT_FOUND')
+        }
+        if (!weaknessType) {
+            throw new Error('WEAKNESS_TYPE_NOT_FOUND')
+        }
+        
+        // Cette méthode a été généré par la relation many to many
+        // le nom vient aussi de la alias qu'on donné dans la relation
+        await type.removeWeaknesses(weaknessType);
+
+        return { type, weaknessType };
+    },
+    getWeakness: async (typeId) => {
+        const weaknesses = await db.Type.findOne({
+            where: { id: typeId },
+            include: [{
+                model: db.Type,
+                // l'alias défini dans la relation many to many
+                as: 'weaknesses',
+                // Pour éviter d'avoir les champs depuis les types référencés
+                through: { attributes: [] }
+            }]
+        });
+        return weaknesses;
     }
 }
 

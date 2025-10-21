@@ -19,4 +19,11 @@ typeRouter.route('/:id')
 typeRouter.route('/:typeId/pokemon')
     .get(typeController.getPokemonByType)
 
+typeRouter.route('/:typeId/weakness')
+    .get(typeController.getWeakness)
+
+typeRouter.route('/:typeId/weakness/:type2Id')
+    .post(typeController.addWeakness)
+    .delete(typeController.removeWeakness)
+
 export default typeRouter;
