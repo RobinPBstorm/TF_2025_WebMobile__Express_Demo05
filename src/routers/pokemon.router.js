@@ -10,6 +10,9 @@ pokemonRouter.route('/')
 pokemonRouter.route('/:id')
     .get(pokemonController.getById)
     .delete(pokemonController.delete)
-    .put(pokemonController.update);
+    // prévu pour modifier l'intégralité d'un pokémon
+    .put(pokemonController.update)
+    // prévu pour modifier certain champ
+    .patch(pokemonController.patch);
 
 export default pokemonRouter;

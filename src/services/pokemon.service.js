@@ -19,8 +19,22 @@ const pokemonService = {
         const newPokemon = await db.Pokemon.create(pokemon);
         return newPokemon;
     },
-    update: (id, data) => {
+    update: async (id, data) => {
+        const oldPokemon = await pokemonService.getById(id);
 
+        if (!oldPokemon) {
+            throw new Error('POKEMON_NOT_FOUND');
+        }
+
+        const nbRow = await db.Pokemon.update(data, {
+            where : {id : id},
+            returning: true
+        });
+
+        if (nbRow[0] === 1) {
+            return pokemonService.getById(id);
+        }
+        return null;
     },
     delete: async (id) => {
         const nbRowDeleted = await db.Pokemon.destroy({

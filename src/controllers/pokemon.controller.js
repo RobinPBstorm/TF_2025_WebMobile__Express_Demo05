@@ -12,7 +12,8 @@ const pokemonController = {
         const pokemon = await pokemonService.getById(pokemonId);
     
         if (!pokemon) {
-            res.sendStatus(404);
+            res.status(404);
+            res.json({message: 'pokemon non trouvé'})
             return;
         }
         res.json(pokemon);
@@ -22,7 +23,8 @@ const pokemonController = {
         const pokemonDB = await pokemonService.getById(data.id);
 
         if (pokemonDB) {
-            res.sendStatus(400);
+            res.status(400);
+            res.json({message: "pokemon déjà présent"})
             return;
         }
 
@@ -44,8 +46,51 @@ const pokemonController = {
             res.sendStatus(404);
         }
     },
-    update: (req,res) => {
-        res.sendStatus(501);
+    update: async (req,res) => {
+        try {
+            const id = parseInt(req.params.id);
+            const data = req.body;
+
+            const pokemonUpdated = await pokemonService.update(id, data);
+
+            res.status(200);
+            res.json(pokemonUpdated);
+        }
+        catch (error){
+            switch (error.message){
+                case 'POKEMON_NOT_FOUND':
+                    res.status(404);
+                    res.json({message: "Pokemon non trouvé"});
+                    break;
+                default:
+                    res.status(400);
+                    res.json({message: error})
+                    break;
+            }
+        }
+    },
+    patch:async (req,res) => {
+        try {
+            const id = parseInt(req.params.id);
+            const data = req.body;
+
+            const pokemonUpdated = await pokemonService.update(id, data);
+
+            res.status(200);
+            res.json(pokemonUpdated);
+        }
+        catch (error){
+            switch (error.message){
+                case 'POKEMON_NOT_FOUND':
+                    res.status(404);
+                    res.json({message: "Pokemon non trouvé"});
+                    break;
+                default:
+                    res.status(400);
+                    res.json({message: error})
+                    break;
+            }
+        }
     },
 }
 
