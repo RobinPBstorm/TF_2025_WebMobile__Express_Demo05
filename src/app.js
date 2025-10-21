@@ -1,6 +1,7 @@
 import express from 'express';
 import pokemonRouter from './routers/pokemon.router.js';
 import db from './models/index.js';
+import typeRouter from './routers/type.router.js';
 
 const { PORT, NODE_ENV } = process.env;
 
@@ -20,6 +21,7 @@ db.sequelize.authenticate()
 app.use(express.json());
 
 app.use('/api/pokemon', pokemonRouter);
+app.use('/api/type', typeRouter);
 
 app.listen(PORT,(err)=> {
     if (err) {
