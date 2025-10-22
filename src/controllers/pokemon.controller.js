@@ -4,6 +4,7 @@ import {pokemonDetailDTO} from "../DTO/pokemon.dto.js"
 const pokemonController = {
     getAll: async (req,res) => {
         const pokemons = await pokemonService.getAll();
+        res.status(200);
         res.json(pokemons);
     },
     getById: async (req,res) => {
@@ -16,6 +17,7 @@ const pokemonController = {
             res.json({message: 'pokemon non trouvé'})
             return;
         }
+        res.status(200);
         res.json(pokemon);
     },
     add: async (req,res) => {
@@ -31,8 +33,10 @@ const pokemonController = {
         const pokemon = await pokemonService.add(data);
         const pokemonDTO = new pokemonDetailDTO(pokemon);
 
-        res.sendStatus(201);
-        res.location('api/pokemon/'+ pokemonDTO.id);
+        res.status(201);
+        // donne l'endpoint a contacté pour avoir la ressource 
+        // dans le header de la réponse
+        res.location('api/pokemon/'+ pokemonDTO.id)
         res.json(pokemonDTO);
     },
     delete: async (req,res) => {

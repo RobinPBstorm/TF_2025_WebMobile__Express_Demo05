@@ -24,7 +24,7 @@ const typeController = {
         const type = await typeService.add(data);
         const typeDTO = new typeDetailDTO(type);
 
-        res.sendStatus(201);
+        res.status(201);
         res.location('api/type/'+ typeDTO.id);
         res.json(typeDTO);
     },

@@ -33,31 +33,30 @@ db.Weakness = weaknessModel(sequelize);
 // One TO MANY
 // relation one => belongsTo
 db.Pokemon.belongsTo(db.Type,{
-    foreignKey: "type1Id",
-    as: "type1"
-    }
-);
-// relation many => hasMany
-db.Type.hasMany(db.Pokemon, {
-    foreignKey: { 
-        name: "type1Id",
+    foreignKey: {
+        name:"type1Id",
         allowNull: false
     },
+    as: "type1",
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE'
 });
-db.Pokemon.belongsTo(db.Type,{
-    foreignKey: "type2Id",
-    as: "type2"
-    }
-);
+// relation many => hasMany
 db.Type.hasMany(db.Pokemon, {
-    foreignKey: { 
-        name: "type2Id",
+    foreignKey: "type1Id",
+});
+
+db.Pokemon.belongsTo(db.Type,{
+    foreignKey: {
+        name:"type2Id",
         allowNull: true
     },
+    as: "type2",
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE'
+});
+db.Type.hasMany(db.Pokemon, {
+    foreignKey: "type2Id",
 });
 
 // Many to Many
