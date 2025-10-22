@@ -2,6 +2,8 @@ import { Sequelize } from "sequelize";
 import pokemonModel from "./pokemon.model.js";
 import typeModel from "./type.model.js";
 import weaknessModel from "./weakness.model.js";
+import moveModel from "./move.model.js";
+import { pokemonMoveModel } from "./pokemonMove.model.js";
 
 const sequelize = new Sequelize(
     process.env.DB_DATABASE,
@@ -28,6 +30,8 @@ db.sequelize = sequelize;
 db.Pokemon = pokemonModel(sequelize);
 db.Type = typeModel(sequelize);
 db.Weakness = weaknessModel(sequelize);
+db.Move = moveModel(sequelize);
+db.PokemonMove = pokemonMoveModel(sequelize);
 
 // Ajout des relations
 // One TO MANY
@@ -71,4 +75,24 @@ db.Type.belongsToMany(db.Type, {
     otherKey: 'weakAgainstId',
 });
 
+// move vers type => one to many
+db.Move.belongsTo(db.Type,{
+    foreignKey: {
+        name:"typeId",
+        allowNull: false
+    },
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE'
+});
+db.Type.hasMany(db.Move, {
+    foreignKey: "typeId",
+});
+
+// pokemon - move => many to many
+db.Pokemon.belongsToMany(db.Move,
+    {through: db.PokemonMove}
+)
+db.Move.belongsToMany(db.Pokemon,
+    {through: db.PokemonMove}
+)
 export default db;

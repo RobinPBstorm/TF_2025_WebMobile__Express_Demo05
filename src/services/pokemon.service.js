@@ -54,6 +54,33 @@ const pokemonService = {
         });
 
         return nbRowDeleted === 1;
+    },
+    addMove: async (pokemonId, moveId) => {
+        const pokemon = await db.Pokemon.findOne({
+            where : {id: pokemonId}
+        });
+        const move = await db.Move.findOne({
+            where : {id: moveId}
+        });
+
+        // on doit vérifier si a bien récupérer un pokémon et une attaque
+
+        await pokemon.addMove(move);
+
+        return { pokemon, move };
+    },
+    getMove : async (pokemonId) => {
+        const pokemon = await db.Pokemon.findOne({
+            where : { id : pokemonId },
+            include: [
+                {
+                    model: db.Move,
+                    through: { attributes: [] }
+                }
+            ]
+        });
+
+        return pokemon;
     }
 }
 

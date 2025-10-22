@@ -2,6 +2,7 @@ import express from 'express';
 import pokemonRouter from './routers/pokemon.router.js';
 import db from './models/index.js';
 import typeRouter from './routers/type.router.js';
+import moveRouter from './routers/move.router.js';
 
 const { PORT, NODE_ENV } = process.env;
 
@@ -11,17 +12,18 @@ db.sequelize.authenticate()
     .then(() => console.log('Connection DB: OK'))
     .catch((err) => console.error(`Connection DB: Error (${err})`));
 
-    if (NODE_ENV !== 'production') {
-        db.sequelize.sync({
-            //force: true,
-            //alter: true
-        });
-    }
+if (NODE_ENV !== 'production') {
+    db.sequelize.sync({
+        //force: true,
+        //alter: true
+    });
+}
 
 app.use(express.json());
 
 app.use('/api/pokemon', pokemonRouter);
 app.use('/api/type', typeRouter);
+app.use('/api/move', moveRouter);
 
 app.listen(PORT,(err)=> {
     if (err) {

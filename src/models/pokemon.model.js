@@ -54,5 +54,5 @@ export default function pokemonModel (sequelize) {
         }
     );
 
-        return Pokemon;
-    };
+    return Pokemon;
+};

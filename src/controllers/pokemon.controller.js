@@ -96,6 +96,22 @@ const pokemonController = {
             }
         }
     },
+    addMove: async (req,res) => {
+        const pokemonId = parseInt(req.params.pokemonId);
+        const moveId = parseInt(req.params.moveId);
+
+        const { pokemon, move } = await pokemonService.addMove(pokemonId, moveId);
+
+        res.status(200);
+        res.json({message : `${pokemon.name} peut maintenant utiliser ${move.name}`})
+    },
+    getMove: async (req,res) => {
+        const pokemonId = parseInt(req.params.pokemonId);
+        const pokemon = await pokemonService.getMove(pokemonId);
+
+        res.status(200);
+        res.json(pokemon);
+    }    
 }
 
 export default pokemonController;

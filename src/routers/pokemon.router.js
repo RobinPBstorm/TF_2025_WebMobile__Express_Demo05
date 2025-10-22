@@ -15,4 +15,10 @@ pokemonRouter.route('/:id')
     // prévu pour modifier certain champ
     .patch(pokemonController.patch);
 
+pokemonRouter.route('/:pokemonId/move')
+    .get(pokemonController.getMove);
+
+pokemonRouter.route('/:pokemonId/move/:moveId')
+    .post(pokemonController.addMove);
+
 export default pokemonRouter;
